@@ -16,10 +16,11 @@ export function useCtaComponentClass(
   // Memorize the merged mapping object
   const mapping = useMemo(() => {
     // Merge the global, brand, and theme objects.
-    const mergedMapping = {
+    // Brand and theme may be empty strings when single-theme mode is active — spread safely.
+    const mergedMapping: Record<string, string> = {
       ...globalMap.GlobalMode1,
-      ...brandMap[brand],
-      ...themeMap[theme],
+      ...((brandMap as Record<string, Record<string, string>>)[brand] ?? {}),
+      ...((themeMap as Record<string, Record<string, string>>)[theme] ?? {}),
     };
 
     // Resolve the mapping.

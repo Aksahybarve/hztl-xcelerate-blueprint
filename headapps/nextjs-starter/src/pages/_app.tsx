@@ -8,7 +8,7 @@ import { CustomSitecorePageProps } from 'lib/page-props';
 import Bootstrap from 'src/Bootstrap';
 import { Render500Fallback } from 'src/Render500Fallback';
 import 'assets/app.css';
-import 'src/assets/themes/index.css';
+import 'src/assets/themes/tokens.css';
 import { JSX, useLayoutEffect } from 'react';
 import scConfig from 'sitecore.config';
 import { supportedFonts } from 'lib/fonts';

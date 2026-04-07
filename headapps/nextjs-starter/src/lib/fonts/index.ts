@@ -1,1 +1,1 @@
-export { supportedFonts } from 'lib/fonts/brand.generated';
+export { supportedFonts } from 'lib/fonts/brand.default';
