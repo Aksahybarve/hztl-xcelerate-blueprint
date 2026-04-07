@@ -1,4 +1,4 @@
-.ThemesWhite {
+.brand-root {
   --component-accordion-divider: var(--general-theme-white-on-surface-border);
   --component-accordion-toggle: var(--color-text-text-secondary);
   --component-accordion-toggle-active: var(--color-text-link-link);

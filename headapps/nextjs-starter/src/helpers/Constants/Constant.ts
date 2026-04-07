@@ -1,10 +1,7 @@
 // Global
 export type SiteName = 'BrandX' | 'HelloWorld' | 'Nimbus';
 
-// Brands
-export type Brands = 'BrandsBrandX' | 'BrandsHelloWorld' | 'BrandsNimbusGoods';
-
-// Themes
+// Themes — kept as a type for component rendering params (selectTheme param from Sitecore)
 export type Themes =
   | 'ThemesWhite'
   | 'ThemesLight'
