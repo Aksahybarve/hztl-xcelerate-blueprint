@@ -59,32 +59,36 @@ class SiteSettingsPlugin implements Plugin {
     }
 
     // Second query to get site settings
-    const settingsResult = await graphqlClient.request<GetSiteSettingsType>(SITE_SETTINGS_QUERY, {
-      siteRootId,
-      language: locale,
-    });
+    try {
+      const settingsResult = await graphqlClient.request<GetSiteSettingsType>(SITE_SETTINGS_QUERY, {
+        siteRootId,
+        language: locale,
+      });
 
-    // Transform the fields array into an object with field names as keys
-    const siteSettingsResult = settingsResult.search?.results?.[0];
+      // Transform the fields array into an object with field names as keys
+      const siteSettingsResult = settingsResult.search?.results?.[0];
 
-    const siteSettings = {
-      gtmId: siteSettingsResult?.gtmId?.jsonValue ?? null,
-      globalSearchSourceId: siteSettingsResult?.globalSearchSourceId?.jsonValue ?? null,
-      globalRecommendationWidgetId:
-        siteSettingsResult?.globalRecommendationWidgetId?.jsonValue ?? null,
-      globalSearchWidgetId: siteSettingsResult?.globalSearchWidgetId?.jsonValue ?? null,
-      globalSearchPreviewWidgetId:
-        siteSettingsResult?.globalSearchPreviewWidgetId?.jsonValue ?? null,
-      favicon: siteSettingsResult?.favicon?.jsonValue ?? null,
-      socialShareLinks: siteSettingsResult?.socialShareLinks?.jsonValue ?? null,
-      siteAlerts: siteSettingsResult?.siteAlerts?.targetItems ?? null,
-      noOfArticlesCount: siteSettingsResult?.noOfArticlesCount.jsonValue ?? null,
-      noOfRelatedArticlesCount: siteSettingsResult?.noOfRelatedArticlesCount.jsonValue ?? null,
-      noOfSearchResultsCount: siteSettingsResult?.noOfSearchResultsCount.jsonValue ?? null,
-      brandStyle: siteSettingsResult?.brandStyle?.jsonValue ?? null,
-    };
-    // Store transformed settings in context
-    props.page.layout.sitecore.context.siteSettings = siteSettings;
+      const siteSettings = {
+        gtmId: siteSettingsResult?.gtmId?.jsonValue ?? null,
+        globalSearchSourceId: siteSettingsResult?.globalSearchSourceId?.jsonValue ?? null,
+        globalRecommendationWidgetId:
+          siteSettingsResult?.globalRecommendationWidgetId?.jsonValue ?? null,
+        globalSearchWidgetId: siteSettingsResult?.globalSearchWidgetId?.jsonValue ?? null,
+        globalSearchPreviewWidgetId:
+          siteSettingsResult?.globalSearchPreviewWidgetId?.jsonValue ?? null,
+        favicon: siteSettingsResult?.favicon?.jsonValue ?? null,
+        socialShareLinks: siteSettingsResult?.socialShareLinks?.jsonValue ?? null,
+        siteAlerts: siteSettingsResult?.siteAlerts?.targetItems ?? null,
+        noOfArticlesCount: siteSettingsResult?.noOfArticlesCount?.jsonValue ?? null,
+        noOfRelatedArticlesCount: siteSettingsResult?.noOfRelatedArticlesCount?.jsonValue ?? null,
+        noOfSearchResultsCount: siteSettingsResult?.noOfSearchResultsCount?.jsonValue ?? null,
+        brandStyle: siteSettingsResult?.brandStyle?.jsonValue ?? null,
+      };
+      // Store transformed settings in context
+      props.page.layout.sitecore.context.siteSettings = siteSettings;
+    } catch (error) {
+      console.warn('Failed to fetch site settings:', error);
+    }
 
     return props;
   }

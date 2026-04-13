@@ -26,14 +26,25 @@ class SvgCachePlugin implements Plugin {
     // Create a cache of SVG text for each field
     const svgCache: Record<string, string> = {};
 
+    const publicUrl =
+      process.env.NEXT_PUBLIC_SITECORE_API_HOST ||
+      process.env.PUBLIC_URL ||
+      'http://localhost:3000';
+
     await Promise.all(
       // Fetch the SVG text for each field and cache it
       distinctSvgs.map(async (src) => {
-        const response = await fetch(src);
-        if (!response.ok) return;
-        const svgText = await response.text();
-        if (svgText) {
-          svgCache[src] = svgText;
+        try {
+          // Ensure absolute URL for server-side fetch
+          const absoluteSrc = src.startsWith('/') ? `${publicUrl}${src}` : src;
+          const response = await fetch(absoluteSrc);
+          if (!response.ok) return;
+          const svgText = await response.text();
+          if (svgText) {
+            svgCache[src] = svgText;
+          }
+        } catch (error) {
+          console.warn(`Failed to fetch SVG: ${src}`, error);
         }
       })
     );
