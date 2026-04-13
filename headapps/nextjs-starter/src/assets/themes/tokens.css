@@ -1,0 +1,27 @@
+/*
+ * tokens.css — Single static theme entry point.
+ *
+ * Multi-brand / multi-theme switching has been removed.
+ * This file loads one set of design tokens for the entire site.
+ *
+ * To customise the design tokens for your project:
+ *   1. Edit _GlobalMode1.css  — primitive values (colors, spacing, typography, etc.)
+ *   2. Edit _BrandsBrandX.css — component-level semantic tokens (bg, text, padding per component)
+ *   3. Edit _ThemesWhite.css  — component state overrides (active colors, hover states, etc.)
+ *
+ * Device-specific responsive overrides are loaded automatically below.
+ */
+
+/* Base primitive tokens — always applied under .brand-root */
+@import url('./_GlobalMode1');
+
+/* Responsive device overrides */
+@import url('./_DeviceDesktop');
+@import url('./_DeviceMobile');
+@import url('./_DeviceTablet');
+
+/* Single brand — update token values in this file to match your design */
+@import url('./_BrandsBrandX');
+
+/* Single theme — update token values in this file to match your design */
+@import url('./_ThemesWhite');
