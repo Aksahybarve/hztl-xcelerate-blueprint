@@ -1,9 +1,9 @@
-import { MultisiteMiddleware } from '@sitecore-content-sdk/nextjs/middleware';
+import { AppRouterMultisiteMiddleware } from '@sitecore-content-sdk/nextjs/middleware';
 import sites from '.sitecore/sites.json';
 import scConfig from 'sitecore.config';
 
-// Instantiate middlewares - they will use Edge config if available, otherwise fall back to local config
-export const multisiteMiddleware = new MultisiteMiddleware({
+// App Router multisite middleware - resolves site from hostname and rewrites to /[site]/[locale]/path
+export const multisiteMiddleware = new AppRouterMultisiteMiddleware({
   /**
    * List of sites for site resolver to work with
    */
