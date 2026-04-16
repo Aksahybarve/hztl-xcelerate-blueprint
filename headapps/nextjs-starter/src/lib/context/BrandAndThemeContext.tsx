@@ -37,7 +37,7 @@ type BrandAndThemeProviderProps = HTMLAttributes<HTMLDivElement> & {
 
 /**
  * Simplified provider — no brand/theme switching.
- * Renders children directly. `brand-root` class is applied statically in _document.tsx.
+ * Renders children directly. `brand-root` class is applied statically in app/layout.tsx.
  */
 export const BrandAndThemeProvider = ({ children }: BrandAndThemeProviderProps) => {
   return (
