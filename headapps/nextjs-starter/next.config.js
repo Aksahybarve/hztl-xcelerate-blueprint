@@ -1,3 +1,6 @@
+const createNextIntlPlugin = require('next-intl/plugin');
+const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
+
 // Import plugins directly - Content SDK 1.3.2 doesn't require generated file
 const feaasPlugin = require('./src/lib/next-config/plugins/feaas.js');
 const graphqlPlugin = require('./src/lib/next-config/plugins/graphql.js');
@@ -48,15 +51,6 @@ const nextConfig = {
       process.env.PUBLIC_URL === 'http://localhost:3000'
         ? process.env.SITECORE_API_HOST
         : undefined,
-  },
-
-  i18n: {
-    // These are all the locales you want to support in your application.
-    // These should generally match (or at least be a subset of) those in Sitecore.
-    locales: ['en', 'es-MX', 'fr-CA', 'ar-AE'],
-    // This is the locale that will be used when visiting a non-locale
-    // prefixed path e.g. `/styleguide`.
-    defaultLocale: process.env.SITECORE_DEFAULT_LANGUAGE || 'en',
   },
 
   // See headapps\nextjs-starter\src\lib\next-config\plugins\images.js
@@ -121,6 +115,6 @@ const nextConfig = {
 module.exports = () => {
   // Run the base config through any configured plugins
   const finalNextConfig = Object.values(plugins).reduce((acc, plugin) => plugin(acc), nextConfig);
-  // console.log('finalNextConfig', JSON.stringify(finalNextConfig, null, 2));
-  return finalNextConfig;
+  // Wrap with next-intl for App Router i18n support
+  return withNextIntl(finalNextConfig);
 };
