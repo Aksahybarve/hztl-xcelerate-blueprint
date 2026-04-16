@@ -1,7 +1,9 @@
+'use client';
+
 // Global
 import { useSearchResultsSelectedFilters } from '@sitecore-search/react';
 
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 // Type isn't explicitly exported, so get the type from the return value.
@@ -32,23 +34,16 @@ const useEnsureFacetUrl = () => {
   // Call decodeURI to handle escaped characters, e.g. spaces.
   const decodedFacetUrlFragment = decodeURI(rawFacetUrlFragment);
 
-  const currentHash = router.asPath.split('#')[1] ?? '';
+  const currentHash =
+    typeof window !== 'undefined' ? (window.location.hash.replace(/^#/, '') ?? '') : '';
 
   useEffect(() => {
     // Only update if it's changed
     if (currentHash !== decodedFacetUrlFragment) {
-      router.push(
-        {
-          pathname: window.location.pathname,
-          // window.location.search includes the '?' if there is a querystring.
-          // This caused extra '?' to be added each time.
-          // If there is no querystring, there is no '?' so this issue wasn't caught earlier.
-          query: window.location.search.replace(/^\?/, ''),
-          hash: decodedFacetUrlFragment,
-        },
-        undefined,
-        { scroll: false }
-      );
+      const search = window.location.search.replace(/^\?/, '');
+      const hash = decodedFacetUrlFragment ? `#${decodedFacetUrlFragment}` : '';
+      const newUrl = `${window.location.pathname}${search ? `?${search}` : ''}${hash}`;
+      router.replace(newUrl, { scroll: false });
     }
   }, [router, decodedFacetUrlFragment, currentHash]);
 };
@@ -87,9 +82,7 @@ function facetToUrlFragment(selectedFacets: SearchResultsSelectedFilters): strin
 }
 
 function useFacetsFromUrl(): SearchResultsSelectedFilters {
-  const router = useRouter();
-
-  const hash = router.asPath.split('#')[1] ?? '';
+  const hash = typeof window !== 'undefined' ? (window.location.hash.replace(/^#/, '') ?? '') : '';
 
   // Parse the hash parameter as if it were a querystring
   const hashAsQuery = new URLSearchParams('?' + hash);

@@ -1,3 +1,5 @@
+'use client';
+
 // Global
 import { useSearchParams } from 'next/navigation';
 import React, { JSX } from 'react';

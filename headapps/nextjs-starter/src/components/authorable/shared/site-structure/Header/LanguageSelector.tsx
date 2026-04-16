@@ -1,6 +1,8 @@
+'use client';
+
 // Global
-import { useRouter } from 'next/router';
 import { useCallback, useRef } from 'react';
+import { useLocale } from 'next-intl';
 import NextLink from 'next/link';
 import { tv } from 'tailwind-variants';
 import { useLanguages } from 'lib/hooks/sitecore/context';
@@ -28,8 +30,7 @@ type LanguageSelectorProps = {
 };
 
 const LanguageSelector = ({ regionList }: LanguageSelectorProps) => {
-  const router = useRouter();
-  const locale = router.locale;
+  const locale = useLocale();
   const {
     isMobile,
     isMobileLanguageSelectorOpen,
@@ -307,8 +308,10 @@ const LanguageSelector = ({ regionList }: LanguageSelectorProps) => {
                               {...getTestProps(`header-language-dropdown-item`)}
                             >
                               <NextLink
-                                href={pathname}
-                                locale={matchedLanguage.isoCode}
+                                href={pathname.replace(
+                                  `/${locale}/`,
+                                  `/${matchedLanguage.isoCode}/`
+                                )}
                                 className={dropDownImageWrapper()}
                                 aria-current={isSelected ? 'true' : undefined}
                                 aria-label={

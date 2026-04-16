@@ -1,6 +1,8 @@
+'use client';
+
 // Global
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { tv } from 'tailwind-variants';
 
 // Local
@@ -207,9 +209,7 @@ const NavItem = (props: NavItemInterface) => {
   const isList = megaMenuList.length > 0;
   const navigationLinks = navigationLink?.value?.href;
 
-  const router = useRouter();
-
-  const asPath = router.asPath;
+  const asPath = usePathname() ?? '';
 
   /*
    * State

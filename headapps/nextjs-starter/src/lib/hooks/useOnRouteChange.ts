@@ -1,24 +1,24 @@
+'use client';
+
 // Global
-import { RouterEvent, useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import { useEffect, useRef } from 'react';
 
 export const useOnRouteChange = (
   callback: () => void,
-  events: RouterEvent[] = ['routeChangeComplete'],
+  _events: string[] = ['routeChangeComplete'],
   runOnHashChange = false
 ) => {
-  const router = useRouter();
+  const pathname = usePathname();
+  const prevPathname = useRef(pathname);
 
-  // Ensures that we don't needless attach and detach events due to depencency changing
-  const eventString = events.join('|');
+  // In App Router, there are no router.events. Instead, detect route changes via usePathname.
   useEffect(() => {
-    const events = eventString.length > 0 ? (eventString.split('|') as RouterEvent[]) : [];
-    events.forEach((eventName) => router.events.on(eventName, callback));
-
-    return () => {
-      events.forEach((eventName) => router.events.off(eventName, callback));
-    };
-  }, [callback, eventString, router.events]);
+    if (prevPathname.current !== pathname) {
+      prevPathname.current = pathname;
+      callback();
+    }
+  }, [pathname, callback]);
 
   useEffect(() => {
     if (runOnHashChange) {

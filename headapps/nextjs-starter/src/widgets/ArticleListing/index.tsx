@@ -1,3 +1,5 @@
+'use client';
+
 import { FilterAnd, FilterEqual, SearchResultsWidgetQuery } from '@sitecore-search/react';
 
 // Global
@@ -18,7 +20,7 @@ import ArticleCardWrapper, {
 import { SvgIcon } from 'helpers/SvgIcon';
 import useDictionary from 'lib/hooks/useDictionary';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { SearchLoading } from 'helpers/SearchLoading/SearchLoading';
 import { PageTypes } from '.generated/Project.HztlFoundation.model';
 import { getTestProps } from 'lib/testing/utils';
@@ -70,7 +72,7 @@ export const ArticleSearchResultsComponent = (props: ArticleListingProps) => {
 
   const [articlesList, setArticlesList] = useState<ArticleModel[]>([]);
   const { getDictionaryValue } = useDictionary();
-  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     setArticlesList([]);
@@ -82,7 +84,7 @@ export const ArticleSearchResultsComponent = (props: ArticleListingProps) => {
     if (onPageNumberChange) {
       onPageNumberChange({ page: 1 });
     }
-  }, [router.asPath, query, currentCategory, isCategoryPage, onPageNumberChange]);
+  }, [pathname, query, currentCategory, isCategoryPage, onPageNumberChange]);
 
   useEffect(() => {
     if (isSuccess) {
