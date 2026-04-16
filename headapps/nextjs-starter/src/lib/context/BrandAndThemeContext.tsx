@@ -41,7 +41,9 @@ type BrandAndThemeProviderProps = HTMLAttributes<HTMLDivElement> & {
  */
 export const BrandAndThemeProvider = ({ children }: BrandAndThemeProviderProps) => {
   return (
-    <BrandAndThemeContext.Provider value={{ brand: DefaultBrand, theme: DefaultTheme, allowThemeSwitching: false }}>
+    <BrandAndThemeContext.Provider
+      value={{ brand: DefaultBrand, theme: DefaultTheme, allowThemeSwitching: false }}
+    >
       {children}
     </BrandAndThemeContext.Provider>
   );

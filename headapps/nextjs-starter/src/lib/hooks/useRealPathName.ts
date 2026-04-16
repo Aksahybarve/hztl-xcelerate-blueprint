@@ -8,6 +8,6 @@ import { extractPath } from '@sitecore-content-sdk/nextjs/utils';
  */
 export function useRealPathName() {
   const pathName = usePathname();
-  const path = extractPath({ params: { path: pathName } });
+  const path = extractPath({ params: { path: pathName ?? '' } });
   return path;
 }

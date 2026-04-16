@@ -7,6 +7,8 @@ export type CtaButtonStyle = 'primary' | 'white' | 'tonal';
  * Multi-brand/theme CTA style resolution has been removed.
  * Always returns 'primary' as the default button style.
  */
-export function useCtaComponentClass(_ctaComponentClass: CtaComponentClass | undefined): CtaButtonStyle {
+export function useCtaComponentClass(
+  _ctaComponentClass: CtaComponentClass | undefined
+): CtaButtonStyle {
   return 'primary';
 }

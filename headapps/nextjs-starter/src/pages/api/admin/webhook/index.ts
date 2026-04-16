@@ -1,5 +1,5 @@
 import { WebhookRequestBody } from 'lib/webhook/revalidate/type';
-import { fetchItemUrl } from '../utils';
+import { fetchItemUrl } from 'lib/webhook/revalidate/admin-utils';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { RevalidationService } from 'lib/webhook/revalidate/revalidate-service';
 import { waitUntil } from '@vercel/functions';
